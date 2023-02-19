@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 from dolby import *
 from db import *
 from helpers import *
+from checkbook import *
 
 app = Flask(__name__)
 
@@ -25,7 +26,10 @@ def stream(label=None):
     print(name)
     name = name[0][0]
     url = stream_url(name)
-    return render_template("stream.html", url=url)
+
+    goal = cur.execute(f"SELECT goal FROM streams WHERE label='{label}'").fetchall()[0][0]
+
+    return render_template("stream.html", url=url, goal=goal, label=label)
     # return f'<iframe src="{stream_url(name)}" allowfullscreen width="640" height="480"></iframe>'
 
 @app.route("/form", methods=["GET", "POST"])
@@ -65,9 +69,12 @@ def success(label, name, response):
 def landing():
     return render_template("landing.html")
 
-"""
 @app.route("/donate", methods=["POST"])
-def donate(user=None):
-    if user is None:
-        return "please supply a user" 
-"""
+def donate():
+    data = request.json
+    label = data["label"]
+    print("ALBEL: ", label)
+    org = cur.execute(f"SELECT recipient FROM streams WHERE label='{label}'").fetchall()[0][0]
+    response = make_payment(data["amount"], org)
+    print(response)
+    return jsonify(img_uri=response["image_uri"])

@@ -45,39 +45,73 @@
 
 </style>
 
+<link rel="stylesheet" type="text/css" href="loading-bar.css"/>
+<script type="text/javascript" src="loading-bar.js"></script>
+
 <div class="container" >
     <div class="stream" style="padding: 5% 0 0;">
         <iframe src="{{ url }}" allowfullscreen width="640" height="480"></iframe>
     </div>
     <div class="btn-group">
-        <h1 style="margin-right: 10%; font-size: 24px;">DONATE:</h1>
-        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$5</button>
-        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$10</button>
-        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$25</button>
-        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$50</button>
-        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$100</button>
+        <h1 id="donateText" style="margin-right: 10%; font-size: 24px;">DONATE ($0 / ${{ goal }})</h1>
+        <button class="open-button" onclick="openForm(5)" style="margin-right: 20px;">$5</button>
+        <button class="open-button" onclick="openForm(10)" style="margin-right: 20px;">$10</button>
+        <button class="open-button" onclick="openForm(25)" style="margin-right: 20px;">$25</button>
+        <button class="open-button" onclick="openForm(50)" style="margin-right: 20px;">$50</button>
+        <button class="open-button" onclick="openForm(100)" style="margin-right: 20px;">$100</button>
         <button style="margin-right: 20px;">Other</button>
       </div>
     
       <div class="form-popup" id="myForm">
         <form action="/action_page.php" class="form-container">
-            <button type="button" style="border: none; background: none;"><img src="/static/checkbook.png" style="width: 60%;"></button>
+            <button type="button" onclick="submitCheck({{ goal }}, '{{ label }}')" style="border: none; background: none;"><img src="/static/checkbook.png" style="width: 60%;"></button>
         </form>
       </div>
-    
+
+      <img id="heckbook" src="/static/dummy.png" alt="" width="400" height="133">
 </div>
 
 <script>
-function openForm() {
+
+var y = 0;
+var z = 0;
+
+function openForm(x) {
   document.getElementById("myForm").style.display = "block";
+  z = x;
+  //y += x;
+  //document.getElementById("donateText").innerHTML = "DONATE ($" + y + " / $" + 5000 + ")";
 }
 
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
+
+function submitCheck(goal, url) {
+    y += z;
+        var temp = z;
+    z = 0;
+        document.getElementById("donateText").innerHTML = "DONATE ($" + y + " / $" +  goal + ")";
+    document.getElementById("heckbook").src = "/static/check.png";
+        /*
+    const xhr = new XMLHttpRequest();
+xhr.open("POST", "http://127.0.0.1:5001/donate");
+xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+const body = JSON.stringify({
+    "amount" : temp,
+        "label" : url
+});
+xhr.onload = () => {
+    var r = JSON.parse(xhr.responseText)["img_uri"];
+        console.log("CHECKBOOK URL: " + r);
+        console.log(typeof r);
+    document.getElementById("heckbook").src = r;
+};
+xhr.send(body);
+    */
+}
+
 </script>
 
 
 {% endblock %}
-
-
