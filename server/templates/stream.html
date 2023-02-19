@@ -1,0 +1,83 @@
+{% extends 'layout.html'%}
+
+{% block body %}
+<style>
+.btn-group button {
+  background-color: #64648c; /* Green background */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #9494ad;
+} 
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 25%;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+
+</style>
+
+<div class="container" >
+    <div class="stream" style="padding: 5% 0 0;">
+        <iframe src="{{ url }}" allowfullscreen width="640" height="480"></iframe>
+    </div>
+    <div class="btn-group">
+        <h1 style="margin-right: 10%; font-size: 24px;">DONATE:</h1>
+        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$5</button>
+        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$10</button>
+        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$25</button>
+        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$50</button>
+        <button class="open-button" onclick="openForm()" style="margin-right: 20px;">$100</button>
+        <button style="margin-right: 20px;">Other</button>
+      </div>
+    
+      <div class="form-popup" id="myForm">
+        <form action="/action_page.php" class="form-container">
+            <button type="button" style="border: none; background: none;"><img src="/static/checkbook.png" style="width: 60%;"></button>
+        </form>
+      </div>
+    
+</div>
+
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+
+
+{% endblock %}
+
+
