@@ -3,8 +3,6 @@ import requests
 DOLBY_ID = 'Kb4XjT'
 DOLBY_API_KEY = '273ab65417ee3a09f0cb2c03622a19e6319f8bee3a72f152ed1ffd0428515459'
 
-import requests
-
 def publish_token(name, label):
     url = "https://api.millicast.com/api/publish_token"
 
@@ -27,5 +25,5 @@ def publish_token(name, label):
     }
 
     response = requests.post(url, json=payload, headers=headers)
+    return response.json()
 
-    print(response.text)
