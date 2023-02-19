@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 from dolby import *
 from db import *
@@ -14,15 +14,11 @@ def hello_world():
 def home():
     return render_template("home.html")
 
-@app.route('/success')
-def success():
-    return render_template("success.html")
-
 @app.route("/stream/<label>")
 def stream(label=None):
     if label is None:
         return "invalid label"
-    
+   
     name = cur.execute(f"SELECT name FROM streams WHERE label='{label}'").fetchall()
     if len(name) == 0:
         return f"stream with label {label} does not exist"
@@ -37,7 +33,7 @@ def publish():
         return render_template("form.html")
 
     name = request.form["title"]
-    label = generate_label() 
+    label = generate_label()
     description = request.form["description"]
     recipient = request.form["recipient"]
     goal = request.form["goal"]
@@ -50,15 +46,19 @@ def publish():
 
     insert_row(response["data"]["id"],
                name,
-               label, 
+               label,
                description,
                recipient,
                goal,
                response["data"]["token"])
 
     print(cur.execute("SELECT * FROM streams").fetchall())
+    return redirect(url_for('success',label=label, name=name, response=response["data"]["id"]))
 
-    return f"http://127.0.0.1:5000/stream/{label}"
+@app.route('/success/<label>/<name>/<response>')
+def success(label, name, response):
+    #f"http://127.0.0.1:5000/stream/{label}"
+    return render_template("success.html", label=label, name=name, response=response)
 
 """
 @app.route("/donate", methods=["POST"])
