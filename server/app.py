@@ -6,11 +6,11 @@ from helpers import *
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/test")
 def hello_world():
     return f'<iframe src="{stream_url("s")}" allowfullscreen width="640" height="480"></iframe>'
 
-@app.route('/home')
+@app.route('/')
 def home():
     return render_template("home.html")
 
@@ -24,8 +24,9 @@ def stream(label=None):
         return f"stream with label {label} does not exist"
     print(name)
     name = name[0][0]
-
-    return f'<iframe src="{stream_url(name)}" allowfullscreen width="640" height="480"></iframe>'
+    url = stream_url(name)
+    return render_template("stream.html", url=url)
+    # return f'<iframe src="{stream_url(name)}" allowfullscreen width="640" height="480"></iframe>'
 
 @app.route("/form", methods=["GET", "POST"])
 def publish():
@@ -59,6 +60,10 @@ def publish():
 def success(label, name, response):
     #f"http://127.0.0.1:5000/stream/{label}"
     return render_template("success.html", label=label, name=name, response=response)
+
+@app.route('/landing')
+def landing():
+    return render_template("landing.html")
 
 """
 @app.route("/donate", methods=["POST"])
