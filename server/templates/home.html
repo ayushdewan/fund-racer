@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name=”viewport” content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>FundRacer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="bootstrap.bundle.min.js/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <style>
+        html,body {
+            margin:0;
+            padding:0;
+            width: 100%;
+            height: 100%;
+            overflow-x:hidden;
+            background-color: #333366;
+        }
+        .column {
+            float: left;
+            width: 50%;
+            flex: 50%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+        .zoom {
+          transition: transform .2s; /* Animation */
+        }
+
+        .zoom:hover {
+          transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+    </style>
+
+    <div class="wrapper">
+
+     <meta name=”viewport” content="width=device-width, initial-scale=1">
+     <div class="jumbotron text-center" style="padding: 7% 0 0; background-color: #333366;">
+        <img src="static/logo.PNG" style="max-width: 50%;">
+        <div class="zoom">
+            <button onclick="window.location.href='/form'" style="background-color: #ffffff; width: 275px; height: 60px;">
+                <div class="column" style="width: 100%; float:right; color:#333366; font-size: 16px; line-height: 40px;">START A LIVESTREAM</div>
+            </button>
+        </div>
+        <div class="zoom" style="padding: 2%">
+            <button onclick="window.location.href='/landing'" style="background-color: #ffffff; width: 275px; height: 60px;">
+                <div class="column" style="width: 100%; float:right; color:#333366; font-size: 16px; line-height: 40px;">JOIN LIVESTREAM</div>
+            </button>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>
