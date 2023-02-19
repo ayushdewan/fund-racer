@@ -23,9 +23,11 @@ def stream(label=None):
     if label is None:
         return "invalid label"
     
-    name = cur.execute("SELECT name FROM streams ").fetchall()
-    if name is None:
+    name = cur.execute(f"SELECT name FROM streams WHERE label='{label}'").fetchall()
+    if len(name) == 0:
         return f"stream with label {label} does not exist"
+    print(name)
+    name = name[0][0]
 
     return f'<iframe src="{stream_url(name)}" allowfullscreen width="640" height="480"></iframe>'
 
@@ -56,7 +58,7 @@ def publish():
 
     print(cur.execute("SELECT * FROM streams").fetchall())
 
-    return f"{name}/{response['data']['token']}"
+    return f"http://127.0.0.1:5000/stream/{label}"
 
 """
 @app.route("/donate", methods=["POST"])
