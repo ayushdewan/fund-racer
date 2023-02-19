@@ -1,4 +1,4 @@
 # fund-racer
 
-insert description here
+Re-imagine Crowdfunding
 
